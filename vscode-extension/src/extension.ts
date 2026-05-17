@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import * as fs from 'fs';
+import * as path from 'path';
 
 const execAsync = promisify(exec);
 
@@ -10,10 +11,28 @@ function getCFCommand(subcommand: string): string {
     const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || vscode.workspace.rootPath || "";
     const isWindows = process.platform === "win32";
     const exeName = isWindows ? "daemon-rust.exe" : "daemon-rust";
+
+    // 1. Packaged production binary path inside the installed extension
+    const platform = process.platform;
+    const arch = process.arch;
+    let platformDir = "";
+    if (platform === "win32" && arch === "x64") {
+        platformDir = "win32-x64";
+    } else if (platform === "darwin") {
+        platformDir = arch === "arm64" ? "darwin-arm64" : "darwin-x64";
+    } else if (platform === "linux" && arch === "x64") {
+        platformDir = "linux-x64";
+    }
+
+    const packagedBin = platformDir ? path.join(__dirname, "..", "bin", platformDir, exeName) : "";
+
+    // 2. Development paths inside workspace
     const debugBin = `${wsRoot}/daemon-rust/target/debug/${exeName}`;
     const releaseBin = `${wsRoot}/daemon-rust/target/release/${exeName}`;
 
-    if (fs.existsSync(releaseBin)) {
+    if (packagedBin && fs.existsSync(packagedBin)) {
+        return `"${packagedBin}" ${subcommand}`;
+    } else if (fs.existsSync(releaseBin)) {
         return `"${releaseBin}" ${subcommand}`;
     } else if (fs.existsSync(debugBin)) {
         return `"${debugBin}" ${subcommand}`;

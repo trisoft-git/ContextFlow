@@ -4,7 +4,7 @@
   <img src="./vscode-extension/icon.png" width="128" height="128" alt="ContextFlow Constellation Icon" />
 </p>
 
-> **[English](./README.md) | [한국어](./README.ko.md)**
+> **[English](https://github.com/trisoft-git/ContextFlow/blob/main/README.md) | [한국어](https://github.com/trisoft-git/ContextFlow/blob/main/README.ko.md)**
 
 ContextFlow는 개발자의 작업 맥락(파일 변경, Git Diff, 터미널 명령어 및 종료 코드)을 로컬 환경의 SQLite 데이터베이스에 영구적이고 안전하게 적재하고, 이를 기반으로 최적의 작업 요약, 구현 계획 및 자동화된 에러 복구 패치(Agentic Fix)를 제안하는 **로컬 우선(Local-first) 지능형 개발 흐름 추적 엔진**입니다.
 

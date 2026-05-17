@@ -4,7 +4,7 @@
   <img src="./vscode-extension/icon.png" width="128" height="128" alt="ContextFlow Constellation Icon" />
 </p>
 
-> **[English](./README.md) | [한국어](./README.ko.md)**
+> **[English](https://github.com/trisoft-git/ContextFlow/blob/main/README.md) | [한국어](https://github.com/trisoft-git/ContextFlow/blob/main/README.ko.md)**
 
 ContextFlow is a high-performance, local-first developer context engine that seamlessly captures file modifications, Git diffs, terminal execution sequences, and command exit statuses into an encrypted-ready local SQLite database. It leverages this real-time session memory to generate instant activity summaries, engineering plans, and automated self-healing code patches (**Agentic Fixes**) based on contextual database timelines.
 

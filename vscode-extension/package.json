@@ -2,7 +2,7 @@
   "name": "contextflow-vscode",
   "displayName": "ContextFlow",
   "description": "Local-first Hyper-Context Autonomous Work Engine for VS Code",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "contextflow",
   "icon": "icon.png",
   "repository": {
@@ -15,7 +15,11 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:contextflow.showSummary",
+    "onCommand:contextflow.setGoal",
+    "onCommand:contextflow.startSession"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
