@@ -2,9 +2,13 @@
   "name": "contextflow-vscode",
   "displayName": "ContextFlow",
   "description": "Local-first Hyper-Context Autonomous Work Engine for VS Code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "contextflow",
   "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trisoft-git/ContextFlow.git"
+  },
   "engines": {
     "vscode": "^1.90.0"
   },
