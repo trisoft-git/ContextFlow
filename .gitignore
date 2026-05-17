@@ -1,0 +1,39 @@
+# Rust
+/target
+
+# ContextFlow Data
+.contextflow/
+memory.db
+knowledge/
+
+# Environment
+.env
+.env.local
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Draft Documentation
+docs/
+
+# Backup
+backup/
+
+# Node.js & VS Code Extension
+node_modules/
+/vscode-extension/out/
+/vscode-extension/dist/
+*.vsix
+
+# Temporary Binaries
+rustup-init.exe
+
+# Agent Systems
+.antigravity/
+.tasks/

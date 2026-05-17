@@ -1,0 +1,65 @@
+name: Release Daemon Binaries
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-daemon:
+    name: Build Daemon - ${{ matrix.job.os }} (${{ matrix.job.target }})
+    runs-on: ${{ matrix.job.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            binary_name: daemon-rust
+            asset_name: contextflow-daemon-linux-x64
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            binary_name: daemon-rust
+            asset_name: contextflow-daemon-macos-x64
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            binary_name: daemon-rust
+            asset_name: contextflow-daemon-macos-arm64
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            binary_name: daemon-rust.exe
+            asset_name: contextflow-daemon-win-x64.exe
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.job.target }}
+
+      - name: Cargo Cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: daemon-rust
+
+      - name: Build Release Binary
+        run: |
+          cargo build --release --manifest-path daemon-rust/Cargo.toml --target ${{ matrix.job.target }}
+
+      - name: Rename and Prepare Asset
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp daemon-rust/target/${{ matrix.job.target }}/release/${{ matrix.job.binary_name }} dist/${{ matrix.job.asset_name }}
+
+      - name: Upload Binary to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/${{ matrix.job.asset_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
